@@ -1,0 +1,156 @@
+/* ==========================================================
+   TeleHealth Pro - Main Stylesheet
+   Theme: Medical Professional (Blue / White / Light Blue)
+   ========================================================== */
+
+:root {
+    --primary-blue: #0d6efd;
+    --deep-blue: #0a58ca;
+    --light-blue: #e7f1ff;
+    --accent-blue: #cfe2ff;
+    --soft-white: #f8f9fa;
+    --text-dark: #212529;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+    color: var(--text-dark);
+    background-color: var(--soft-white);
+}
+
+a { text-decoration: none; }
+
+/* ---------- Navbar ---------- */
+.navbar-brand i { color: var(--primary-blue); }
+.nav-link { font-weight: 500; color: var(--text-dark) !important; }
+.nav-link:hover { color: var(--primary-blue) !important; }
+
+/* ---------- Hero Section ---------- */
+.hero-section {
+    background: linear-gradient(120deg, var(--light-blue) 0%, #ffffff 100%);
+    padding: 100px 0 80px;
+}
+.hero-section h1 { font-weight: 800; line-height: 1.2; }
+.hero-section .highlight { color: var(--primary-blue); }
+
+/* ---------- Section Spacing ---------- */
+section { padding: 80px 0; }
+.section-title { font-weight: 700; margin-bottom: 1rem; }
+.section-subtitle { color: #6c757d; max-width: 650px; margin: 0 auto 3rem; }
+
+/* ---------- Cards ---------- */
+.feature-card, .category-card, .doctor-card, .testimonial-card {
+    border: none;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(13, 110, 253, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    height: 100%;
+}
+.feature-card:hover, .category-card:hover, .doctor-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(13, 110, 253, 0.15);
+}
+.category-card .icon-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--light-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: var(--primary-blue);
+    margin: 0 auto 1rem;
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    border-radius: 50px;
+    font-weight: 600;
+}
+.btn-primary:hover { background-color: var(--deep-blue); border-color: var(--deep-blue); }
+.btn-outline-primary { border-radius: 50px; font-weight: 600; }
+.rounded-pill { border-radius: 50px !important; }
+
+/* ---------- Doctor Cards ---------- */
+.doctor-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+.badge-available { background-color: #198754; }
+.badge-busy { background-color: #dc3545; }
+
+/* ---------- Testimonials ---------- */
+.testimonial-card { padding: 2rem; }
+.testimonial-card .stars { color: #ffc107; }
+
+/* ---------- Auth Pages ---------- */
+.auth-card {
+    max-width: 520px;
+    margin: 60px auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(13, 110, 253, 0.12);
+    border: none;
+}
+.auth-side-panel {
+    background: linear-gradient(135deg, var(--primary-blue), var(--deep-blue));
+    color: #fff;
+    border-radius: 20px 0 0 20px;
+}
+
+/* ---------- Dashboard ---------- */
+.dashboard-card {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform .2s ease;
+}
+.dashboard-card:hover { transform: translateY(-4px); }
+.stat-card {
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: #fff;
+}
+.stat-card.blue { background: linear-gradient(135deg, #0d6efd, #0a58ca); }
+.stat-card.green { background: linear-gradient(135deg, #198754, #146c43); }
+.stat-card.orange { background: linear-gradient(135deg, #fd7e14, #d96209); }
+.stat-card.purple { background: linear-gradient(135deg, #6f42c1, #59359a); }
+.stat-card.teal { background: linear-gradient(135deg, #20c997, #17a37e); }
+
+/* ---------- Admin Sidebar ---------- */
+.admin-sidebar { position: sticky; top: 0; min-width: 240px; }
+.admin-sidebar .nav-link.active { background-color: var(--primary-blue); color: #fff !important; }
+.admin-sidebar .nav-link { border-radius: 10px; margin-bottom: 2px; }
+.admin-sidebar .nav-link:hover { background-color: rgba(255,255,255,0.08); }
+
+/* ---------- Tables ---------- */
+.table-responsive { border-radius: 12px; overflow: hidden; }
+.table thead { background-color: var(--light-blue); }
+
+/* ---------- Footer ---------- */
+footer a:hover { color: var(--primary-blue) !important; }
+
+/* ---------- Error Pages ---------- */
+.error-page { padding: 120px 0; text-align: center; }
+.error-page .error-code { font-size: 8rem; font-weight: 800; color: var(--primary-blue); }
+
+/* ---------- Utility ---------- */
+.text-primary-blue { color: var(--primary-blue); }
+.bg-light-blue { background-color: var(--light-blue); }
+.smooth-fade { animation: fadeIn 0.6s ease; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991px) {
+    .admin-sidebar { min-width: 100%; height: auto; position: relative; }
+    .hero-section { padding: 60px 0; text-align: center; }
+}

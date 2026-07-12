@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Doctor - TeleHealth Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="d-flex">
+    <div class="admin-sidebar bg-dark text-light p-3 vh-100">
+        <a href="dashboard.html" class="d-flex align-items-center mb-4 text-decoration-none text-light">
+            <i class="bi bi-heart-pulse-fill text-primary fs-3 me-2"></i>
+            <span class="fs-5 fw-bold">TeleHealth<span class="text-primary">Admin</span></span>
+        </a>
+        <ul class="nav nav-pills flex-column gap-1">
+            <li class="nav-item"><a class="nav-link text-light" href="dashboard.html"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link text-light active" href="doctors.html"><i class="bi bi-person-badge me-2"></i>Doctors</a></li>
+            <li class="nav-item"><a class="nav-link text-light" href="categories.html"><i class="bi bi-grid-3x3-gap me-2"></i>Categories</a></li>
+            <li class="nav-item"><a class="nav-link text-light" href="users.html"><i class="bi bi-people me-2"></i>Registered Users</a></li>
+            <li class="nav-item"><a class="nav-link text-light" href="appointments.html"><i class="bi bi-calendar-check me-2"></i>Appointments</a></li>
+            <li class="nav-item mt-3"><button id="logoutBtn" class="nav-link text-light border-0 bg-transparent w-100 text-start"><i class="bi bi-box-arrow-right me-2"></i>Logout</button></li>
+        </ul>
+    </div>
+
+    <div class="flex-grow-1 p-4">
+        <h2 class="fw-bold mb-4">Add New Doctor</h2>
+
+        <div id="alertContainer" style="max-width: 800px;"></div>
+
+        <div class="card p-4 shadow-sm border-0" style="max-width: 800px;">
+            <form id="doctorForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Doctor Name</label>
+                        <input type="text" id="doctorName" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Qualification</label>
+                        <input type="text" id="qualification" class="form-control" placeholder="e.g. MBBS, MD" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Specialization</label>
+                        <input type="text" id="specialization" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Category</label>
+                        <select id="categoryId" class="form-select" required>
+                            <option value="">Select category</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Experience (years)</label>
+                        <input type="number" min="0" id="experience" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Consultation Fee ($)</label>
+                        <input type="number" step="0.01" min="0" id="consultationFee" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Rating (0-5)</label>
+                        <input type="number" step="0.1" min="0" max="5" id="rating" class="form-control" placeholder="4.5">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Hospital Name</label>
+                    <input type="text" id="hospital" class="form-control" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Available Days</label>
+                        <input type="text" id="availableDays" class="form-control" placeholder="e.g. Mon-Fri, 9am-5pm" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Availability Status</label>
+                        <select id="availability" class="form-select">
+                            <option value="Available">Available</option>
+                            <option value="Busy">Busy</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Photo URL (optional)</label>
+                    <input type="text" id="photo" class="form-control" placeholder="https://example.com/photo.jpg">
+                </div>
+
+                <button type="submit" class="btn btn-primary px-4">Save Doctor</button>
+                <a href="doctors.html" class="btn btn-outline-secondary px-4">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+    async function loadCategories() {
+        const select = document.getElementById("categoryId");
+        try {
+            const categories = await Api.getCategories();
+            categories.forEach(cat => {
+                const opt = document.createElement("option");
+                opt.value = cat.id;
+                opt.textContent = cat.categoryName;
+                select.appendChild(opt);
+            });
+        } catch (e) {
+            showAlert("alertContainer", "Could not load categories.");
+        }
+    }
+
+    document.getElementById("doctorForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const dto = {
+            doctorName: document.getElementById("doctorName").value.trim(),
+            qualification: document.getElementById("qualification").value.trim(),
+            specialization: document.getElementById("specialization").value.trim(),
+            experience: Number(document.getElementById("experience").value),
+            hospital: document.getElementById("hospital").value.trim(),
+            consultationFee: Number(document.getElementById("consultationFee").value),
+            rating: document.getElementById("rating").value ? Number(document.getElementById("rating").value) : null,
+            availableDays: document.getElementById("availableDays").value.trim(),
+            availability: document.getElementById("availability").value,
+            photo: document.getElementById("photo").value.trim(),
+            categoryId: Number(document.getElementById("categoryId").value),
+        };
+
+        try {
+            await Api.admin.addDoctor(dto);
+            window.location.href = "doctors.html";
+        } catch (err) {
+            showAlert("alertContainer", err.message);
+        }
+    });
+
+    (async () => {
+        const user = await requireAdmin();
+        if (!user) return;
+        loadCategories();
+    })();
+</script>
+</body>
+</html>

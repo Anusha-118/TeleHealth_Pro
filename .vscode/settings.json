@@ -1,0 +1,10 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "editor.formatOnSave": true,
+    "files.exclude": {
+        "**/backend/target": true
+    },
+    "java.import.gradle.enabled": false,
+    "java.project.sourcePaths": ["backend/src/main/java"]
+}
