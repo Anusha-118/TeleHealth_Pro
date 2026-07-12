@@ -14,4 +14,4 @@
 // for why (cross-domain session cookies require it).
 // ==========================================================
 
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = "https://telehealth-pro-6jk9.onrender.com/api";
